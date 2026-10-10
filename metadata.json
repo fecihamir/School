@@ -1,0 +1,7 @@
+{
+  "name": "Hibr wa Alwan — École Encre & Pastel",
+  "description": "Official multilingual website for Hibr wa Alwan / École Encre & Pastel in Ouled Fayet, Algiers, Algeria.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+

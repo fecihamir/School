@@ -53,6 +53,7 @@ export interface SchoolConfig {
     title: { ar: string; fr: string; en: string };
     description: { ar: string; fr: string; en: string };
     iconName: string;
+    image: string;
   }>;
   programs: Array<{
     id: string;
@@ -161,7 +162,8 @@ export const SCHOOL_CONFIG: SchoolConfig = {
         fr: "Bassin semi-olympique intérieur avec bassin d'apprentissage pour enfants, assurant un entraînement aquatique sécurisé toute l'année.",
         en: "Advanced indoor semi-Olympic swimming pool with children's training pool for year-round aquatic development in safe conditions."
       },
-      iconName: "Waves"
+      iconName: "Waves",
+      image: "/images/real/FB_IMG_1791624060420.jpg"
     },
     {
       id: "sports_hall",
@@ -171,7 +173,8 @@ export const SCHOOL_CONFIG: SchoolConfig = {
         fr: "Salle omnisports équipée de tapis de tatami protecteurs et d'équipements cardio pour le développement physique et la motricité.",
         en: "Indoor martial arts and gymnastics hall outfitted with tatami mats and fitness equipment for physical discipline and stamina."
       },
-      iconName: "Activity"
+      iconName: "Activity",
+      image: "/images/real/FB_IMG_1791624076114.jpg"
     },
     {
       id: "smart_classes",
@@ -181,17 +184,19 @@ export const SCHOOL_CONFIG: SchoolConfig = {
         fr: "Salles lumineuses équipées de vidéoprojecteurs interactifs pour un apprentissage numérique vivant et captivant.",
         en: "Spacious classrooms featuring interactive video projection systems for engaging and multimedia-driven lessons."
       },
-      iconName: "Monitor"
+      iconName: "Monitor",
+      image: "/images/real/FB_IMG_1791624296395.jpg"
     },
     {
       id: "art_kitchen_studios",
-      title: { ar: "ورشات الفنون التشكيلية ومطبخ الشاف الصغير", fr: "Ateliers d'Art & Cuisine Pédagogique", en: "Fine Arts & Junior Chef Kitchen" },
+      title: { ar: "ورشات الفنون ومطبخ الشاف الصغير", fr: "Ateliers d'Art & Cuisine Pédagogique", en: "Fine Arts & Junior Chef Kitchen" },
       description: {
         ar: "فضاءات خاصة للتعبير الفني، الرسم بالألوان المائية، الأوريغامي، وورشات الطبخ لإكساب التلاميذ مهارات عملية وحياتية مبكرة.",
         fr: "Espaces créatifs pour la peinture à l'eau, l'origami et la cuisine ludique pour développer la créativité et l'autonomie.",
         en: "Dedicated creative spaces for watercolor painting, origami, and culinary workshops fostering hands-on life skills."
       },
-      iconName: "Sparkles"
+      iconName: "Sparkles",
+      image: "/images/real/FB_IMG_1791624083472.jpg"
     },
     {
       id: "theater_hall",
@@ -201,7 +206,8 @@ export const SCHOOL_CONFIG: SchoolConfig = {
         fr: "Espace polyvalent dédié aux représentations théâtrales, chorales et remises officielles des tableaux d'honneur et diplômes.",
         en: "Multipurpose hall for student theatrical performances, choirs, and official ceremonies honoring academic top achievers."
       },
-      iconName: "Drama"
+      iconName: "Drama",
+      image: "/images/real/FB_IMG_1791624091978.jpg"
     },
     {
       id: "building",
@@ -211,7 +217,8 @@ export const SCHOOL_CONFIG: SchoolConfig = {
         fr: "Bâtiment moderne à étages avec façade vitrée contemporaine, accès sécurisé, casiers individuels et espace d'accueil des familles.",
         en: "Multi-story contemporary facility featuring reflective architectural glass, secured entrances, student lockers, and parent reception suites."
       },
-      iconName: "Building2"
+      iconName: "Building2",
+      image: "/images/real/20261010_100643.jpg"
     }
   ],
   programs: [

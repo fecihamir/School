@@ -71,7 +71,7 @@ export const SCHOOL_CONFIG: SchoolConfig = {
     en: "Hibr wa Alwan Educational Complex"
   },
   slogan: {
-    ar: "يا نشءُ أنت رجاؤنا وبك الصباحُ قد اقترب • معاً نحو مستقبل أفضل",
+    ar: "معاً نحو مستقبل أفضل",
     fr: "We can help you — Ensemble vers un avenir meilleur",
     en: "We can help you — Together towards a brighter future"
   },
@@ -163,7 +163,7 @@ export const SCHOOL_CONFIG: SchoolConfig = {
         en: "Advanced indoor semi-Olympic swimming pool with children's training pool for year-round aquatic development in safe conditions."
       },
       iconName: "Waves",
-      image: "/images/real/FB_IMG_1791624060420.jpg"
+      image: "/images/real/swimming_pool.jpg"
     },
     {
       id: "sports_hall",
@@ -174,7 +174,7 @@ export const SCHOOL_CONFIG: SchoolConfig = {
         en: "Indoor martial arts and gymnastics hall outfitted with tatami mats and fitness equipment for physical discipline and stamina."
       },
       iconName: "Activity",
-      image: "/images/real/FB_IMG_1791624076114.jpg"
+      image: "/images/real/sports_gym.jpg"
     },
     {
       id: "smart_classes",
@@ -185,7 +185,7 @@ export const SCHOOL_CONFIG: SchoolConfig = {
         en: "Spacious classrooms featuring interactive video projection systems for engaging and multimedia-driven lessons."
       },
       iconName: "Monitor",
-      image: "/images/real/FB_IMG_1791624296395.jpg"
+      image: "/images/real/interactive_class.jpg"
     },
     {
       id: "art_kitchen_studios",
@@ -196,7 +196,7 @@ export const SCHOOL_CONFIG: SchoolConfig = {
         en: "Dedicated creative spaces for watercolor painting, origami, and culinary workshops fostering hands-on life skills."
       },
       iconName: "Sparkles",
-      image: "/images/real/FB_IMG_1791624083472.jpg"
+      image: "/images/real/junior_chef.jpg"
     },
     {
       id: "theater_hall",
@@ -207,7 +207,7 @@ export const SCHOOL_CONFIG: SchoolConfig = {
         en: "Multipurpose hall for student theatrical performances, choirs, and official ceremonies honoring academic top achievers."
       },
       iconName: "Drama",
-      image: "/images/real/FB_IMG_1791624091978.jpg"
+      image: "/images/real/ceremony_excellence.jpg"
     },
     {
       id: "building",
@@ -218,7 +218,7 @@ export const SCHOOL_CONFIG: SchoolConfig = {
         en: "Multi-story contemporary facility featuring reflective architectural glass, secured entrances, student lockers, and parent reception suites."
       },
       iconName: "Building2",
-      image: "/images/real/20261010_100643.jpg"
+      image: "/images/real/school_building_facade.jpg"
     }
   ],
   programs: [

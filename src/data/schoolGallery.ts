@@ -21,148 +21,238 @@ export interface GalleryItem {
 
 export const REAL_GALLERY_ITEMS: GalleryItem[] = [
   {
-    id: 'building-facade',
-    image: '/images/real/20261010_100643.jpg',
-    category: 'campus',
-    title: {
-      ar: 'المبنى المدرسي الحديث — أولاد فايت',
-      fr: 'Façade du Groupe Scolaire — Ouled Fayet',
-      en: 'Modern School Campus — Ouled Fayet'
-    },
-    description: {
-      ar: 'بناية معمارية حديثة بواجهة زجاجية عاكسة، مجهزة بأحدث معايير الأمان والراحة للتلاميذ.',
-      fr: 'Bâtiment contemporain avec façade vitrée sécurisée, conçu selon les normes éducatives modernes.',
-      en: 'Contemporary facility with architectural glass facade designed to modern educational safety standards.'
-    }
-  },
-  {
-    id: 'classroom-primary',
-    image: '/images/real/744109120_1609573121168113_7635609828020162030_n.jpg',
-    category: 'academics',
-    title: {
-      ar: 'جلسة تعليمية تفاعلية — الطور الابتدائي',
-      fr: 'Séance d’apprentissage interactive — Primaire',
-      en: 'Interactive Classroom Learning — Primary'
-    },
-    description: {
-      ar: 'أفواج دراسية نموذجية بطاولات تفاعلية مستديرة وتأطير بيداغوجي يشجع على المشاركة والإبداع.',
-      fr: 'Classes à effectif réduit avec tables modulaires favorisant l’échange et l’apprentissage actif.',
-      en: 'Optimized class sizes with modular collaborative seating fostering student participation.'
-    }
-  },
-  {
-    id: 'robotics-ai',
-    image: '/images/real/FB_IMG_1791623974166.jpg',
-    category: 'academics',
-    title: {
-      ar: 'ورشة البرمجة والروبوتيك والذكاء الاصطناعي',
-      fr: 'Atelier Robotique, Codage & IA',
-      en: 'Robotics, Coding & AI Workshop'
-    },
-    description: {
-      ar: 'تعليم المهارات المستقبلية وتركيب الدوائر الإلكترونية والبرمجة بالكتل للأطفال.',
-      fr: 'Initiation aux technologies d’avenir : montage de circuits électroniques et programmation par blocs.',
-      en: 'Hands-on future tech skills: electronic circuit assembly and block-based programming.'
-    }
-  },
-  {
-    id: 'science-lab',
-    image: '/images/real/FB_IMG_1791623994404.jpg',
-    category: 'academics',
-    title: {
-      ar: 'مخبر العلوم والتجارب العلمية',
-      fr: 'Laboratoire de Sciences & Expérimentations',
-      en: 'Science & Chemistry Laboratory'
-    },
-    description: {
-      ar: 'تجارب علمية حية وملموسة تقرب المفاهيم الفيزيائية والكيميائية لتلاميذ المتوسط والثانوي.',
-      fr: 'Expériences pratiques en physique et chimie pour les collégiens et lycéens.',
-      en: 'Practical physical and chemical experiments solidifying middle and high school scientific concepts.'
-    }
-  },
-  {
     id: 'swimming-pool',
-    image: '/images/real/FB_IMG_1791624060420.jpg',
+    image: '/images/real/swimming_pool.jpg',
     category: 'sports_activities',
     title: {
-      ar: 'المسبح المدرسي المغطى والمدفأ',
-      fr: 'Piscine Intérieure Chauffée & Sécurisée',
-      en: 'Indoor Heated Swimming Pool'
+      ar: 'المسبح المدرسي نصف أولمبي المغطى والمدفأ',
+      fr: 'Piscine Semi-Olympique Couverte & Chauffée',
+      en: 'Indoor Semi-Olympic Heated Pool'
     },
     description: {
-      ar: 'حصص سباحة منتظمة بإشراف مدربين مؤهلين وأحزمة سلامة للأعمار المختلفة.',
-      fr: 'Séances de natation encadrées par des maîtres-nageurs certifiés dans un environnement tempéré.',
-      en: 'Structured swimming lessons overseen by qualified coaches in a climate-controlled setting.'
+      ar: 'حوض سباحة نصف أولمبي داخلي مجهز بأعلى معايير السلامة والتأطير الرياضي المعتمد على مدار السنة.',
+      fr: 'Bassin semi-olympique intérieur avec encadrement de maîtres-nageurs qualifiés toute l’année.',
+      en: 'Climate-controlled indoor semi-Olympic pool supervised by certified swim coaches year-round.'
     }
   },
   {
     id: 'sports-gym',
-    image: '/images/real/FB_IMG_1791624076114.jpg',
+    image: '/images/real/sports_gym.jpg',
     category: 'sports_activities',
     title: {
-      ar: 'قاعة الجمباز والفنون القتالية (Dojo)',
-      fr: 'Dojo & Salle Omnisports',
+      ar: 'قاعة الجمباز واللياقة والفنون القتالية (Dojo)',
+      fr: 'Dojo & Salle Omnisports et Fitness',
       en: 'Gymnastics & Martial Arts Dojo'
     },
     description: {
-      ar: 'أرضيات تاتامي واقية ومعدات لياقة لبناء الرشاقة والانضباط والثقة بالنفس.',
+      ar: 'أرضيات تاتامي واقية ومعدات تدريب لتعزيز الرشاقة البدنية واللياقة والانضباط.',
       fr: 'Espace sécurisé avec tatamis professionnels pour la motricité, la gymnastique et les arts martiaux.',
       en: 'Fully padded tatami floors dedicated to physical agility, gymnastics, and martial arts discipline.'
     }
   },
   {
+    id: 'science-lab',
+    image: '/images/real/science_lab.jpg',
+    category: 'campus',
+    title: {
+      ar: 'مخبر العلوم الطبيعية والتجارب الفيزيائية',
+      fr: 'Laboratoire Scientifique & Expérimentations',
+      en: 'Modern Science Laboratory & Experiments'
+    },
+    description: {
+      ar: 'معدات وتجهيزات مخبرية متطورة تتيح للتلاميذ إجراء التجارب العلمية واكتساب المنهج التجريبي العملي.',
+      fr: 'Équipements de laboratoire modernes pour l’apprentissage pratique et la démarche scientifique.',
+      en: 'Well-equipped laboratory supporting hands-on experimentation and scientific discovery.'
+    }
+  },
+  {
+    id: 'school-library',
+    image: '/images/real/school_library_reading.jpg',
+    category: 'campus',
+    title: {
+      ar: 'المكتبة المدرسية وفضاء المطالعة والبحوث',
+      fr: 'Bibliothèque Scolaire & Espace de Lecture',
+      en: 'School Library & Research Resource Center'
+    },
+    description: {
+      ar: 'مجموعة ثرية من المراجع والقصص والموسوعات لتشجيع حب القراءة والبحث العلمي في أجواء هادئة.',
+      fr: 'Fonds documentaire riche stimulant le goût de la lecture et la recherche documentaire.',
+      en: 'Rich book collection and peaceful reading environment nurturing literary curiosity.'
+    }
+  },
+  {
+    id: 'robotics-ai',
+    image: '/images/real/robotics_ai.jpg',
+    category: 'academics',
+    title: {
+      ar: 'ورشة الروبوتيك والذكاء الاصطناعي والتكنولوجيا',
+      fr: 'Atelier Robotique & Intelligence Artificielle',
+      en: 'Robotics & AI Technology Workshop'
+    },
+    description: {
+      ar: 'تدريب تفاعلي على البرمجة وتركيب الروبوتات وتنمية التفكير المنطقي والهندسي للجيل الجديد.',
+      fr: 'Initiation à la programmation et à la robotique développant la logique et l’esprit d’ingénierie.',
+      en: 'Hands-on coding, logic, and robotics engineering fostering tomorrow’s technological thinkers.'
+    }
+  },
+  {
     id: 'junior-chef',
-    image: '/images/real/FB_IMG_1791624083472.jpg',
+    image: '/images/real/junior_chef.jpg',
     category: 'sports_activities',
     title: {
-      ar: 'مطبخ الشاف الصغير — ورشة فنون الطبخ',
+      ar: 'ورشات الشاف الصغير — فنون الطبخ والحلويات',
       fr: 'Atelier Cuisine Pédagogique — Chef Junior',
       en: 'Junior Chef Culinary Workshop'
     },
     description: {
-      ar: 'تعليم الأطفال تحضير وجبات صحية واكتساب مهارات الاستقلالية والنظافة والعمل الجماعي.',
+      ar: 'ورشة حية ومبهجة يتعلم فيها الأطفال تحضير وجبات صحية واكتساب الاستقلالية وروح الفريق.',
       fr: 'Apprentissage ludique des saveurs, de l’hygiène alimentaire et de l’autonomie culinaire.',
-      en: 'Culinary education empowering children with healthy cooking habits, hygiene, and teamwork.'
+      en: 'Hands-on culinary education empowering children with healthy cooking habits and teamwork.'
+    }
+  },
+  {
+    id: 'soroban-mental',
+    image: '/images/real/soroban_math.jpg',
+    category: 'academics',
+    title: {
+      ar: 'برنامج الحساب الذهني والسوربان (Soroban)',
+      fr: 'Calcul Mental & Boulier Japonais (Soroban)',
+      en: 'Mental Arithmetic & Soroban Program'
+    },
+    description: {
+      ar: 'جلسات تدريب متخصصة بالعداد اليدوي لتطوير سرعة التركيز وتنشيط الذاكرة الصورية والبديهة.',
+      fr: 'Renforcement de la concentration, de la rapidité de calcul et de la mémoire visuelle.',
+      en: 'Boosting rapid computation, mental concentration, and visual memory through abacus techniques.'
+    }
+  },
+  {
+    id: 'interactive-datashow',
+    image: '/images/real/interactive_class.jpg',
+    category: 'academics',
+    title: {
+      ar: 'التعليم التفاعلي بالعوارض الرقمية (Data Show)',
+      fr: 'Apprentissage Interactif par Vidéoprojecteur',
+      en: 'Interactive Smart Board & Video Lessons'
+    },
+    description: {
+      ar: 'شروح تعليمية ودروس مرئية عبر العوارض الرقمية الحديثة لترسيخ المفاهيم وتحفيز المشاركة.',
+      fr: 'Séances enrichies de projections multimédias pour une assimilation vivante et durable.',
+      en: 'Multimedia-enriched visual lessons designed for high engagement and conceptual mastery.'
+    }
+  },
+  {
+    id: 'classroom-learning',
+    image: '/images/real/classroom_learning.jpg',
+    category: 'campus',
+    title: {
+      ar: 'فضاءات التدريس النظامي الحديثة والمجهزة',
+      fr: 'Salles de Classe Modernes & Ergonomiques',
+      en: 'Spacious Ergonomic & Modern Classrooms'
+    },
+    description: {
+      ar: 'حجرات دراسية مضيئة ومجهزة بطاولات مريحة وتكييف مناسب يوفر بيئة استيعاب مثالية للطلاب.',
+      fr: 'Salles climatisées et lumineuses offrant un environnement propice à l’apprentissage continu.',
+      en: 'Bright, air-conditioned learning spaces tailored for focus, comfort, and collaborative learning.'
+    }
+  },
+  {
+    id: 'art-studio',
+    image: '/images/real/art_workshop.jpg',
+    category: 'sports_activities',
+    title: {
+      ar: 'ورشة الفنون التشكيلية والرسم بالألوان المائية',
+      fr: 'Atelier d’Arts Plastiques & Peinture',
+      en: 'Fine Arts & Creative Painting Studio'
+    },
+    description: {
+      ar: 'إبداعات فنية وتعبير حر للأطفال عبر تقنيات الرسم والألوان المائية والأشغال اليدوية.',
+      fr: 'Développement de la créativité et expression libre à travers la peinture et le modelage.',
+      en: 'Nurturing artistic expression through watercolor painting, crafts, and mixed media.'
     }
   },
   {
     id: 'theater-auditorium',
-    image: '/images/real/FB_IMG_1791624091978.jpg',
-    category: 'trips_events',
+    image: '/images/real/theater_auditorium.jpg',
+    category: 'campus',
     title: {
-      ar: 'قاعة المسرح والعروض الثقافية',
-      fr: 'Auditorium & Salle de Spectacles',
-      en: 'Auditorium & Theatrical Stage'
+      ar: 'المسرح المدرسي والمدرج التربوي للعروض',
+      fr: 'Auditorium & Théâtre Scolaire',
+      en: 'School Auditorium & Performance Stage'
     },
     description: {
-      ar: 'خشبة مسرح مجهزة للعروض المدرسية والإنشاد وتنمية مهارات الخطابة والتحدث أمام الجمهور.',
-      fr: 'Scène équipée pour les pièces théâtrales d’élèves, chorales et prises de parole en public.',
-      en: 'Equipped performance stage for student theatrical plays, recitals, and public speaking.'
+      ar: 'فضاء متكامل للخطابة والمناظرات والعروض المسرحية لبناء الثقة والطلاقة اللغوية أمام الجمهور.',
+      fr: 'Espace scénique pour l’art oratoire, les débats et l’expression théâtrale en public.',
+      en: 'Dedicated hall for drama, public speaking, and assemblies strengthening presentation confidence.'
     }
   },
   {
-    id: 'quran-tajweed',
-    image: '/images/real/FB_IMG_1791624114476.jpg',
+    id: 'preschool-corner',
+    image: '/images/real/preschool_early_childhood.jpg',
     category: 'academics',
     title: {
-      ar: 'حلقة حفظ وتلاوة القرآن الكريم بالتجويد',
-      fr: 'Cercle de Mémorisation & Récitation du Coran',
-      en: 'Quran Memorization & Tajweed Circle'
+      ar: 'فضاء التعليم المبكر وأنشطة الطور التحضيري',
+      fr: 'Espace d’Éveil & Petite Section (Maternelle)',
+      en: 'Early Childhood & Kindergarten Discovery'
     },
     description: {
-      ar: 'غرس القيم الأخلاقية وتلقين أحكام التلاوة الصحيحة بأصوات ندية.',
-      fr: 'Enseignement des règles de psalmodie (Tajweed) et consolidation des valeurs éducatives.',
-      en: 'Quranic recitation rules (Tajweed) and character-building moral education.'
+      ar: 'أنشطة حركية وتربوية ممتعة في بيئة ملونة مصممة خصيصاً لتنمية التفكير المنطقي والاجتماعي.',
+      fr: 'Activités d’éveil sensoriel et développement de la motricité fine dans un cadre chaleureux.',
+      en: 'Sensory and motor skill activities promoting early logical thinking and creative discovery.'
+    }
+  },
+  {
+    id: 'kindergarten-play',
+    image: '/images/real/kindergarten_activity.jpg',
+    category: 'sports_activities',
+    title: {
+      ar: 'أنشطة براعم الروضة والألعاب الحركية البيداغوجية',
+      fr: 'Activités Psychomotrices & Jeux d’Éveil',
+      en: 'Kindergarten Psychomotor & Educational Play'
+    },
+    description: {
+      ar: 'ألعاب حركية ومسارات ترفيهية تهدف لتطوير التوازن والتعاون بين الأطفال من الأعمار الأولى.',
+      fr: 'Parcours psychomoteurs ludiques favorisant la coordination et l’esprit d’équipe dès le jeune âge.',
+      en: 'Fun psychomotor courses fostering physical balance, team spirit, and coordination.'
+    }
+  },
+  {
+    id: 'quran-club',
+    image: '/images/real/quran_recitation.jpg',
+    category: 'academics',
+    title: {
+      ar: 'نادي ترتيل وحفظ القرآن الكريم والآداب',
+      fr: 'Club de Récitation & Mémorisation du Coran',
+      en: 'Quran Recitation & Tajweed Study Circle'
+    },
+    description: {
+      ar: 'حلقات أسبوعية لتعليم مخارج الحروف وقواعد التجويد وغرس القيم والأخلاق الفاضلة في نفوس التلاميذ.',
+      fr: 'Séances hebdomadaires d’apprentissage des règles de récitation et d’éthique noble.',
+      en: 'Weekly Tajweed recitation sessions cultivating moral values and eloquence.'
+    }
+  },
+  {
+    id: 'ceremony-honors',
+    image: '/images/real/ceremony_awards.jpg',
+    category: 'trips_events',
+    title: {
+      ar: 'حفل تكريم النجباء وتوزيع الجوائز السنوية',
+      fr: 'Cérémonie Annuelle des Prix & Palmarès',
+      en: 'Annual Awards & Student Distinction Gala'
+    },
+    description: {
+      ar: 'توزيع شهادات الامتياز والجوائز التقديرية تشجيعاً للاجتهاد والتألق طوال الموسم الدراسي.',
+      fr: 'Remise officielle des diplômes et prix d’excellence récompensant le travail méritant des élèves.',
+      en: 'Annual celebration honoring outstanding students with certificates of distinction and awards.'
     }
   },
   {
     id: 'trip-tipaza',
-    image: '/images/real/FB_IMG_1791624166575.jpg',
+    image: '/images/real/trip_tipaza_ruins.jpg',
     category: 'trips_events',
     title: {
-      ar: 'خرجة بيداغوجية إلى الآثار الرومانية بتيبازة',
+      ar: 'الخرجة البيداغوجية إلى الآثار الرومانية بتيبازة',
       fr: 'Sortie Pédagogique aux Ruines Romaines de Tipaza',
-      en: 'Field Trip to Tipaza Roman Ruins'
+      en: 'Educational Field Trip to Tipaza Ruins'
     },
     description: {
       ar: 'استكشاف التراث التاريخي الجزائري والآثار القديمة على ضفاف البحر الأبيض المتوسط.',
@@ -172,7 +262,7 @@ export const REAL_GALLERY_ITEMS: GalleryItem[] = [
   },
   {
     id: 'trip-echorouk',
-    image: '/images/real/FB_IMG_1791624189505.jpg',
+    image: '/images/real/trip_echorouk_tv.jpg',
     category: 'trips_events',
     title: {
       ar: 'زيارة استوديوهات الشروق نيوز التلفزيونية',
@@ -180,99 +270,24 @@ export const REAL_GALLERY_ITEMS: GalleryItem[] = [
       en: 'Field Trip to Echorouk News Broadcast Studios'
     },
     description: {
-      ar: 'معايشة واقعية للعمل الإعلامي، تقديم الأخبار، والتعرف على غرف التحكم وكاميرات البث.',
+      ar: 'معايشة واقعية للعمل الإعلامي وتقديم الأخبار والتعرف على غرف التحكم وكاميرات البث.',
       fr: 'Immersion dans le journalisme audiovisuel, présentation sur plateau et régies de diffusion.',
       en: 'Hands-on broadcast journalism experience exploring TV newsrooms, control suites, and studio cameras.'
     }
   },
   {
-    id: 'ceremony-honors',
-    image: '/images/real/FB_IMG_1791624234882.jpg',
-    category: 'trips_events',
-    title: {
-      ar: 'حفل تكريم النجباء ولوحة الشرف (Tableau d’Honneur)',
-      fr: 'Cérémonie d’Excellence & Tableau d’Honneur',
-      en: 'Honor Roll & Academic Excellence Ceremony'
-    },
-    description: {
-      ar: 'تكريم المتفوقين وتوزيع الشهادات والجوائز تقديراً للاجتهاد والتألق طوال الموسم الدراسي.',
-      fr: 'Remise officielle des diplômes et prix d’excellence récompensant le travail méritant des élèves.',
-      en: 'Annual celebration honoring outstanding students with certificates of distinction and awards.'
-    }
-  },
-  {
-    id: 'preschool-corner',
-    image: '/images/real/FB_IMG_1791624010104.jpg',
+    id: 'student-creativity',
+    image: '/images/real/FB_IMG_1791624305474.jpg',
     category: 'academics',
     title: {
-      ar: 'فضاء الألعاب التربوية والتعليم المبكر (الروضة)',
-      fr: 'Espace d’Éveil & Petite Section (Maternelle)',
-      en: 'Early Childhood & Sensory Development Corner'
+      ar: 'معرض الإنتاجات الإبداعية والمشاريع المدرسية',
+      fr: 'Exposition des Projets & Dessins Créatifs',
+      en: 'Student Projects & Creative Showcase'
     },
     description: {
-      ar: 'أنشطة حركية وحسية لتطوير التفكير المنطقي والتعرف على الألوان والأشكال.',
-      fr: 'Activités d’éveil sensoriel et développement de la motricité fine dans un cadre chaleureux.',
-      en: 'Sensory and motor skill activities promoting early logical thinking and creative discovery.'
-    }
-  },
-  {
-    id: 'art-studio',
-    image: '/images/real/FB_IMG_1791624021845.jpg',
-    category: 'sports_activities',
-    title: {
-      ar: 'ورشة الفنون التشكيلية والرسم بالألوان المائية',
-      fr: 'Atelier d’Arts Plastiques & Aquarelle',
-      en: 'Fine Arts & Watercolor Painting Studio'
-    },
-    description: {
-      ar: 'تحفيز الخيال الفني وتعبير التلاميذ عبر تقنيات الرسم والأوريغامي والألوان المائية.',
-      fr: 'Développement de la créativité et expression libre à travers la peinture et le modelage.',
-      en: 'Nurturing artistic expression through watercolor painting, origami, and mixed media.'
-    }
-  },
-  {
-    id: 'soroban-mental',
-    image: '/images/real/FB_IMG_1791624051768.jpg',
-    category: 'academics',
-    title: {
-      ar: 'برنامج الحساب الذهني والسوربان (Soroban)',
-      fr: 'Calcul Mental & Boulier Japonais (Soroban)',
-      en: 'Mental Arithmetic & Soroban Program'
-    },
-    description: {
-      ar: 'تدريبات سرعة التركيز وتنشيط الذاكرة الصورية عبر العداد اليدوي الصيني.',
-      fr: 'Renforcement de la concentration, de la rapidité et de la mémoire visuelle.',
-      en: 'Boosting rapid computation, mental concentration, and visual memory through abacus techniques.'
-    }
-  },
-  {
-    id: 'interactive-datashow',
-    image: '/images/real/FB_IMG_1791624296395.jpg',
-    category: 'academics',
-    title: {
-      ar: 'التعليم التفاعلي بالعوارض الرقمية (Data Show)',
-      fr: 'Apprentissage Interactif par Vidéoprojecteur',
-      en: 'Interactive Smart Board & Projector Lessons'
-    },
-    description: {
-      ar: 'دروس بصرية تفاعلية تدعم الفهم العميق وتجعل التعليم ممتعاً وجذاباً.',
-      fr: 'Séances enrichies de contenus multimédias pour une assimilation vivante et durable.',
-      en: 'Multimedia-enriched visual lessons designed for high engagement and conceptual mastery.'
-    }
-  },
-  {
-    id: 'admissions-official-poster',
-    image: '/images/real/FB_IMG_1791622735626.jpg',
-    category: 'campus',
-    title: {
-      ar: 'الملصق الإداري الرسمي للتسجيلات المدرسية',
-      fr: 'Affiche Officielle des Inscriptions Scolaires',
-      en: 'Official School Admissions & Registration Poster'
-    },
-    description: {
-      ar: 'إعلان فتح التسجيلات لجميع الأطوار مع أرقام التواصل والعنوان الرسمي بأولاد فايت.',
-      fr: 'Annonce officielle d’ouverture des inscriptions avec coordonnées complètes de l’école.',
-      en: 'Official institutional notice detailing enrollment across all academic cycles with verified contact details.'
+      ar: 'عرض رسومات ومشاريع التلاميذ لتشجيع الثقة بالنفس والاعتزاز بالعمل المنجز والمشاركة.',
+      fr: 'Valorisation des talents des élèves à travers l’exposition de leurs œuvres et réalisations.',
+      en: 'Showcasing student artwork and interactive class projects boosting self-confidence and pride.'
     }
   }
 ];

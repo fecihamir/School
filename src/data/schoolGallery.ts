@@ -21,6 +21,21 @@ export interface GalleryItem {
 
 export const REAL_GALLERY_ITEMS: GalleryItem[] = [
   {
+    id: 'building-facade',
+    image: '/images/real/school_building_facade_wide.jpg',
+    category: 'campus',
+    title: {
+      ar: 'الصرح المعماري والحرم المدرسي — مجمع حبر وألوان',
+      fr: 'Façade Principale & Campus Moderne — Groupe Scolaire Encre & Pastel',
+      en: 'Main Campus & Architecture — Encre & Pastel School'
+    },
+    description: {
+      ar: 'صرح تربوي عصري متكامل مجهز بأحدث معايير الأمان والراحة والبيئة التعليمية المحفزة في أولاد فايت.',
+      fr: 'Édifice moderne conçu selon les plus hauts standards pédagogiques et de confort à Ouled Fayet.',
+      en: 'State-of-the-art educational building built for safety, comfort, and student flourishing in Ouled Fayet.'
+    }
+  },
+  {
     id: 'swimming-pool',
     image: '/images/real/swimming_pool.jpg',
     category: 'sports_activities',

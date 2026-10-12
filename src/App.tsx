@@ -12,8 +12,13 @@ import { en } from './locales/en';
 // Direct ESM asset imports guaranteed to bundle and resolve in Vite dev, preview & production
 import schoolLogo from './assets/images/logo.jpg';
 import schoolBuilding from './assets/images/school_building_facade.jpg';
+import classroomHeroImg from './assets/images/classroom_learning.jpg';
+import kindergartenHeroImg from './assets/images/kindergarten_activity.jpg';
+import artWorkshopHeroImg from './assets/images/art_workshop.jpg';
 
 import { REAL_GALLERY_ITEMS, GalleryItem } from './data/schoolGallery';
+import { CampusTourModal } from './components/CampusTourModal';
+import { CampusTourBanner } from './components/CampusTourBanner';
 
 import { 
   Palette, 
@@ -87,10 +92,26 @@ export default function App() {
 
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
+  const [moreDropdownOpen, setMoreDropdownOpen] = useState(false);
   const [enrollModalOpen, setEnrollModalOpen] = useState(false);
+  const [enrollSuccess, setEnrollSuccess] = useState(false);
+  const [tourModalOpen, setTourModalOpen] = useState(false);
+  const [tourBookingData, setTourBookingData] = useState<any>(null);
   const [bacModalOpen, setBacModalOpen] = useState(false);
   const [announcementVisible, setAnnouncementVisible] = useState(true);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  // Sync saved tour booking on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('encre_pastel_tour_booking');
+      if (saved) {
+        setTourBookingData(JSON.parse(saved));
+      }
+    } catch {
+      // Ignore
+    }
+  }, []);
   
   // Resource center search
   const [resourceSearch, setResourceSearch] = useState('');
@@ -103,6 +124,7 @@ export default function App() {
   const [isHovered, setIsHovered] = useState(false);
 
   const langDropdownRef = useRef<HTMLDivElement>(null);
+  const moreDropdownRef = useRef<HTMLDivElement>(null);
 
   const galleryItems = REAL_GALLERY_ITEMS;
   const currentLightboxItem = lightboxIndex !== null ? galleryItems[lightboxIndex] : null;
@@ -173,11 +195,14 @@ export default function App() {
     }
   }, [lang, viewMode]);
 
-  // Close language dropdown on outside click
+  // Close language and more dropdowns on outside click
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (langDropdownRef.current && !langDropdownRef.current.contains(event.target as Node)) {
         setLangDropdownOpen(false);
+      }
+      if (moreDropdownRef.current && !moreDropdownRef.current.contains(event.target as Node)) {
+        setMoreDropdownOpen(false);
       }
     }
     document.addEventListener('mousedown', handleClickOutside);
@@ -189,6 +214,7 @@ export default function App() {
   const handleLangChange = (newLang: Language) => {
     setLang(newLang);
     setLangDropdownOpen(false);
+    setMoreDropdownOpen(false);
     setMobileMenuOpen(false);
   };
 
@@ -198,6 +224,7 @@ export default function App() {
 
   const navigateTo = (mode: ViewMode) => {
     setViewMode(mode);
+    setMoreDropdownOpen(false);
     setMobileMenuOpen(false);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -260,77 +287,128 @@ export default function App() {
           </button>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 2xl:gap-2">
+            {/* 1. Home */}
             <button 
               onClick={() => navigateTo('home')} 
-              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors ${viewMode === 'home' ? 'text-teal-700 bg-teal-50' : 'text-slate-700 hover:text-teal-700 hover:bg-slate-100'}`}
+              className={`px-2.5 py-1.5 text-xs xl:text-[13px] font-bold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${viewMode === 'home' ? 'text-teal-700 bg-teal-50' : 'text-slate-700 hover:text-teal-700 hover:bg-slate-100'}`}
             >
               {t.nav.home}
             </button>
+
+            {/* 2. Education */}
             <a 
               href="#stages" 
               onClick={() => setViewMode('home')}
-              className="px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-teal-700 hover:bg-slate-100 rounded-lg transition-colors"
+              className="px-2.5 py-1.5 text-xs xl:text-[13px] font-bold text-slate-700 hover:text-teal-700 hover:bg-slate-100 rounded-lg transition-colors whitespace-nowrap"
             >
-              {t.nav.stages}
+              {t.nav.education}
             </a>
+
+            {/* 3. Excellence */}
             <a 
               href="#palmares" 
               onClick={() => setViewMode('home')}
-              className="px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-teal-700 hover:bg-slate-100 rounded-lg transition-colors"
+              className="px-2.5 py-1.5 text-xs xl:text-[13px] font-bold text-slate-700 hover:text-teal-700 hover:bg-slate-100 rounded-lg transition-colors whitespace-nowrap"
             >
-              {t.nav.palmares}
+              {t.nav.excellence}
             </a>
+
+            {/* 4. Facilities */}
             <a 
               href="#facilities" 
               onClick={() => setViewMode('home')}
-              className="px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-teal-700 hover:bg-slate-100 rounded-lg transition-colors"
+              className="px-2.5 py-1.5 text-xs xl:text-[13px] font-bold text-slate-700 hover:text-teal-700 hover:bg-slate-100 rounded-lg transition-colors whitespace-nowrap"
             >
               {t.nav.facilities}
             </a>
+
+            {/* 5. Activities */}
             <a 
               href="#vie-scolaire" 
               onClick={() => setViewMode('home')}
-              className="px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-teal-700 hover:bg-slate-100 rounded-lg transition-colors"
+              className="px-2.5 py-1.5 text-xs xl:text-[13px] font-bold text-slate-700 hover:text-teal-700 hover:bg-slate-100 rounded-lg transition-colors whitespace-nowrap"
             >
-              {t.nav.services}
+              {t.nav.activities}
             </a>
-            <a 
-              href="#summer-school" 
-              onClick={() => setViewMode('home')}
-              className="px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-teal-700 hover:bg-slate-100 rounded-lg transition-colors"
-            >
-              {t.nav.summerSchool}
-            </a>
+
+            {/* 6. News (Direct on xl+, in More on lg) */}
             <button 
               onClick={() => navigateTo('news')} 
-              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors ${viewMode === 'news' ? 'text-teal-700 bg-teal-50' : 'text-slate-700 hover:text-teal-700 hover:bg-slate-100'}`}
+              className={`hidden xl:inline-block px-2.5 py-1.5 text-xs xl:text-[13px] font-bold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${viewMode === 'news' ? 'text-teal-700 bg-teal-50' : 'text-slate-700 hover:text-teal-700 hover:bg-slate-100'}`}
             >
               {t.nav.news}
             </button>
+
+            {/* 7. Resources (Direct on xl+, in More on lg) */}
             <button 
               onClick={() => navigateTo('resources')} 
-              className={`px-3 py-1.5 text-xs font-bold rounded-lg transition-colors ${viewMode === 'resources' ? 'text-teal-700 bg-teal-50' : 'text-slate-700 hover:text-teal-700 hover:bg-slate-100'}`}
+              className={`hidden xl:inline-block px-2.5 py-1.5 text-xs xl:text-[13px] font-bold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${viewMode === 'resources' ? 'text-teal-700 bg-teal-50' : 'text-slate-700 hover:text-teal-700 hover:bg-slate-100'}`}
             >
               {t.nav.resources}
             </button>
+
+            {/* 8. Contact (Direct on xl+, in More on lg) */}
             <a 
               href="#contact" 
               onClick={() => setViewMode('home')}
-              className="px-3 py-1.5 text-xs font-bold text-slate-700 hover:text-teal-700 hover:bg-slate-100 rounded-lg transition-colors"
+              className="hidden xl:inline-block px-2.5 py-1.5 text-xs xl:text-[13px] font-bold text-slate-700 hover:text-teal-700 hover:bg-slate-100 rounded-lg transition-colors whitespace-nowrap"
             >
               {t.nav.contact}
             </a>
+
+            {/* Secondary Menu Dropdown for lg breakpoint to prevent horizontal crowding */}
+            <div className="relative xl:hidden" ref={moreDropdownRef}>
+              <button
+                onClick={() => setMoreDropdownOpen(!moreDropdownOpen)}
+                className={`flex items-center gap-1 px-2.5 py-1.5 text-xs font-bold rounded-lg transition-colors whitespace-nowrap cursor-pointer ${moreDropdownOpen || viewMode === 'news' || viewMode === 'resources' ? 'text-teal-700 bg-teal-50' : 'text-slate-700 hover:text-teal-700 hover:bg-slate-100'}`}
+                aria-expanded={moreDropdownOpen}
+                aria-haspopup="true"
+              >
+                <span>{t.nav.more}</span>
+                <ChevronDown className={`w-3 h-3 transition-transform ${moreDropdownOpen ? 'rotate-180' : ''}`} />
+              </button>
+
+              {moreDropdownOpen && (
+                <div 
+                  className="absolute end-0 mt-2 w-40 bg-white rounded-2xl shadow-xl border border-slate-200 py-1.5 z-50 animate-in fade-in zoom-in-95 duration-100"
+                  role="menu"
+                >
+                  <button
+                    onClick={() => { navigateTo('news'); setMoreDropdownOpen(false); }}
+                    className={`w-full text-start px-3.5 py-2 text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${viewMode === 'news' ? 'bg-teal-50 text-teal-800' : 'text-slate-700 hover:bg-slate-50'}`}
+                    role="menuitem"
+                  >
+                    <span>{t.nav.news}</span>
+                  </button>
+                  <button
+                    onClick={() => { navigateTo('resources'); setMoreDropdownOpen(false); }}
+                    className={`w-full text-start px-3.5 py-2 text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${viewMode === 'resources' ? 'bg-teal-50 text-teal-800' : 'text-slate-700 hover:bg-slate-50'}`}
+                    role="menuitem"
+                  >
+                    <span>{t.nav.resources}</span>
+                  </button>
+                  <a
+                    href="#contact"
+                    onClick={() => { setViewMode('home'); setMoreDropdownOpen(false); }}
+                    className="block w-full text-start px-3.5 py-2 text-xs font-bold text-slate-700 hover:bg-slate-50 transition-colors"
+                    role="menuitem"
+                  >
+                    {t.nav.contact}
+                  </a>
+                </div>
+              )}
+            </div>
           </nav>
 
-          {/* Actions: Language Dropdown + CTA + Mobile Hamburger Toggle */}
+          {/* Actions: Compact Language Selector + Single Prominent CTA + Mobile Hamburger Toggle */}
           <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0">
             
-            {/* Globe Language Selector Dropdown */}
+            {/* Compact Globe Language Selector */}
             <div className="relative shrink-0" ref={langDropdownRef}>
               <button
                 onClick={() => setLangDropdownOpen(!langDropdownOpen)}
-                className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 transition-all focus-visible:ring-2 focus-visible:ring-teal-600 shrink-0"
+                className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-1.5 rounded-xl border border-slate-200 text-xs font-bold text-slate-700 bg-white hover:bg-slate-50 transition-all focus-visible:ring-2 focus-visible:ring-teal-600 shrink-0 cursor-pointer"
                 aria-expanded={langDropdownOpen}
                 aria-haspopup="true"
                 aria-label={lang === 'ar' ? 'تغيير اللغة' : lang === 'fr' ? 'Changer de langue' : 'Change language'}
@@ -347,7 +425,7 @@ export default function App() {
                 >
                   <button
                     onClick={() => handleLangChange('ar')}
-                    className={`w-full text-start px-3 py-2 text-xs font-bold flex items-center justify-between transition-colors ${lang === 'ar' ? 'bg-teal-50 text-teal-800' : 'text-slate-700 hover:bg-slate-50'}`}
+                    className={`w-full text-start px-3 py-2 text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${lang === 'ar' ? 'bg-teal-50 text-teal-800' : 'text-slate-700 hover:bg-slate-50'}`}
                     role="menuitem"
                   >
                     <span>العربية (AR)</span>
@@ -355,7 +433,7 @@ export default function App() {
                   </button>
                   <button
                     onClick={() => handleLangChange('fr')}
-                    className={`w-full text-start px-3 py-2 text-xs font-bold flex items-center justify-between transition-colors ${lang === 'fr' ? 'bg-teal-50 text-teal-800' : 'text-slate-700 hover:bg-slate-50'}`}
+                    className={`w-full text-start px-3 py-2 text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${lang === 'fr' ? 'bg-teal-50 text-teal-800' : 'text-slate-700 hover:bg-slate-50'}`}
                     role="menuitem"
                   >
                     <span>Français (FR)</span>
@@ -363,7 +441,7 @@ export default function App() {
                   </button>
                   <button
                     onClick={() => handleLangChange('en')}
-                    className={`w-full text-start px-3 py-2 text-xs font-bold flex items-center justify-between transition-colors ${lang === 'en' ? 'bg-teal-50 text-teal-800' : 'text-slate-700 hover:bg-slate-50'}`}
+                    className={`w-full text-start px-3 py-2 text-xs font-bold flex items-center justify-between transition-colors cursor-pointer ${lang === 'en' ? 'bg-teal-50 text-teal-800' : 'text-slate-700 hover:bg-slate-50'}`}
                     role="menuitem"
                   >
                     <span>English (EN)</span>
@@ -373,10 +451,10 @@ export default function App() {
               )}
             </div>
 
-            {/* Inquire CTA Button */}
+            {/* Single Prominent CTA Button: Admissions / Inquire */}
             <button
-              onClick={() => setEnrollModalOpen(true)}
-              className="hidden sm:inline-flex items-center justify-center px-4 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs shadow-xs hover:shadow transition-all focus-visible:ring-2 focus-visible:ring-teal-700 shrink-0"
+              onClick={() => { setEnrollSuccess(false); setEnrollModalOpen(true); }}
+              className="hidden sm:inline-flex items-center justify-center px-3.5 sm:px-4 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs shadow-xs hover:shadow transition-all focus-visible:ring-2 focus-visible:ring-teal-700 shrink-0 cursor-pointer whitespace-nowrap"
             >
               {t.nav.enroll}
             </button>
@@ -384,7 +462,7 @@ export default function App() {
             {/* Mobile Menu Toggle (Hamburger) */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 hover:text-teal-900 transition-all shrink-0 border border-slate-200/90 focus-visible:ring-2 focus-visible:ring-teal-600 shadow-2xs"
+              className="lg:hidden inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-800 hover:text-teal-900 transition-all shrink-0 border border-slate-200/90 focus-visible:ring-2 focus-visible:ring-teal-600 shadow-2xs cursor-pointer"
               aria-label={mobileMenuOpen ? (lang === 'ar' ? 'إغلاق القائمة' : 'Close navigation menu') : (lang === 'ar' ? 'فتح القائمة الرئيسية' : 'Open navigation menu')}
               aria-expanded={mobileMenuOpen}
             >
@@ -399,27 +477,34 @@ export default function App() {
 
         {/* Mobile Nav Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-1.5 shadow-lg">
+          <div className="lg:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-1 shadow-lg animate-in fade-in duration-150">
+            {/* 1. Home */}
             <button 
-              onClick={() => navigateTo('home')} 
-              className={`w-full text-start px-3.5 py-2.5 rounded-xl text-sm font-bold transition-colors ${viewMode === 'home' ? 'text-teal-800 bg-teal-50' : 'text-slate-800 hover:bg-slate-100'}`}
+              onClick={() => { navigateTo('home'); setMobileMenuOpen(false); }} 
+              className={`w-full text-start px-3.5 py-2.5 rounded-xl text-sm font-bold transition-colors cursor-pointer ${viewMode === 'home' ? 'text-teal-800 bg-teal-50' : 'text-slate-800 hover:bg-slate-100'}`}
             >
               {t.nav.home}
             </button>
+
+            {/* 2. Education */}
             <a 
               href="#stages" 
               onClick={() => { setViewMode('home'); setMobileMenuOpen(false); }}
               className="block px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-slate-100 transition-colors"
             >
-              {t.nav.stages}
+              {t.nav.education}
             </a>
+
+            {/* 3. Excellence */}
             <a 
               href="#palmares" 
               onClick={() => { setViewMode('home'); setMobileMenuOpen(false); }}
               className="block px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-slate-100 transition-colors"
             >
-              {t.nav.palmares}
+              {t.nav.excellence}
             </a>
+
+            {/* 4. Facilities */}
             <a 
               href="#facilities" 
               onClick={() => { setViewMode('home'); setMobileMenuOpen(false); }}
@@ -427,32 +512,33 @@ export default function App() {
             >
               {t.nav.facilities}
             </a>
+
+            {/* 5. Activities */}
             <a 
               href="#vie-scolaire" 
               onClick={() => { setViewMode('home'); setMobileMenuOpen(false); }}
               className="block px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-slate-100 transition-colors"
             >
-              {t.nav.services}
+              {t.nav.activities}
             </a>
-            <a 
-              href="#summer-school" 
-              onClick={() => { setViewMode('home'); setMobileMenuOpen(false); }}
-              className="block px-3.5 py-2.5 rounded-xl text-sm font-bold text-slate-800 hover:bg-slate-100 transition-colors"
-            >
-              {t.nav.summerSchool}
-            </a>
+
+            {/* 6. News */}
             <button 
-              onClick={() => navigateTo('news')} 
-              className={`w-full text-start px-3.5 py-2.5 rounded-xl text-sm font-bold transition-colors ${viewMode === 'news' ? 'text-teal-800 bg-teal-50' : 'text-slate-800 hover:bg-slate-100'}`}
+              onClick={() => { navigateTo('news'); setMobileMenuOpen(false); }} 
+              className={`w-full text-start px-3.5 py-2.5 rounded-xl text-sm font-bold transition-colors cursor-pointer ${viewMode === 'news' ? 'text-teal-800 bg-teal-50' : 'text-slate-800 hover:bg-slate-100'}`}
             >
               {t.nav.news}
             </button>
+
+            {/* 7. Resources */}
             <button 
-              onClick={() => navigateTo('resources')} 
-              className={`w-full text-start px-3.5 py-2.5 rounded-xl text-sm font-bold transition-colors ${viewMode === 'resources' ? 'text-teal-800 bg-teal-50' : 'text-slate-800 hover:bg-slate-100'}`}
+              onClick={() => { navigateTo('resources'); setMobileMenuOpen(false); }} 
+              className={`w-full text-start px-3.5 py-2.5 rounded-xl text-sm font-bold transition-colors cursor-pointer ${viewMode === 'resources' ? 'text-teal-800 bg-teal-50' : 'text-slate-800 hover:bg-slate-100'}`}
             >
               {t.nav.resources}
             </button>
+
+            {/* 8. Contact */}
             <a 
               href="#contact" 
               onClick={() => { setViewMode('home'); setMobileMenuOpen(false); }}
@@ -460,10 +546,12 @@ export default function App() {
             >
               {t.nav.contact}
             </a>
-            <div className="pt-2">
+
+            {/* Registration CTA (Single prominent action in mobile drawer) */}
+            <div className="pt-3 border-t border-slate-100">
               <button
-                onClick={() => { setEnrollModalOpen(true); setMobileMenuOpen(false); }}
-                className="w-full py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold text-sm shadow-xs transition-colors"
+                onClick={() => { setEnrollSuccess(false); setEnrollModalOpen(true); setMobileMenuOpen(false); }}
+                className="w-full py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold text-sm shadow-xs transition-colors cursor-pointer text-center"
               >
                 {t.nav.enroll}
               </button>
@@ -477,91 +565,135 @@ export default function App() {
         
         {viewMode === 'home' && (
           <>
-            {/* Hero Section — Balanced vertical spacing, responsive font size, no excessive offset */}
-            <section className="relative overflow-hidden bg-gradient-to-b from-teal-50/60 via-white to-slate-50 py-8 sm:py-12 lg:py-14">
+            {/* Minimal & Editorial Hero Section — Reference-Inspired Aesthetic */}
+            <section className="relative overflow-hidden bg-white py-12 sm:py-16 lg:py-20 border-b border-slate-100">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 xl:gap-16 items-center">
                   
-                  {/* Left Column (Hero Content) */}
-                  <div className="lg:col-span-7 space-y-4 text-start">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-100/80 border border-teal-200 text-teal-900 text-xs font-bold">
-                      <ShieldCheck className="w-3.5 h-3.5 text-teal-700 shrink-0" aria-hidden="true" />
-                      <span>{t.hero.verifiedBadge}</span>
+                  {/* Text Column (Clean Typographic Hierarchy & Restrained Action Set) */}
+                  <div className="lg:col-span-6 xl:col-span-6 space-y-6 text-start relative z-10">
+                    
+                    {/* Small Understated Eyebrow / Institutional Label */}
+                    <div className="inline-flex items-center gap-2 text-xs font-semibold text-teal-800 tracking-wide">
+                      <span className="w-2 h-2 rounded-full bg-teal-600" aria-hidden="true" />
+                      <span>{t.hero.eyebrow}</span>
                     </div>
 
-                    <h1 className="text-2xl sm:text-3xl lg:text-4xl xl:text-[2.6rem] font-black text-slate-950 tracking-tight leading-tight max-w-2xl">
-                      {t.hero.title}
+                    {/* Prominent Editorial Headline (2–3 Lines) */}
+                    <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-5xl font-black text-slate-950 tracking-tight leading-[1.2] max-w-xl">
+                      {t.hero.title}{' '}
+                      <span className="text-teal-700">
+                        {t.hero.titleHighlight || ''}
+                      </span>
                     </h1>
 
-                    <p className="text-sm sm:text-base text-slate-700 leading-relaxed font-normal max-w-xl">
+                    {/* Short Supporting Paragraph (2–3 Lines) */}
+                    <p className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal max-w-lg">
                       {t.hero.subtitle}
                     </p>
 
-                    <div className="flex flex-wrap items-center gap-3 pt-2">
+                    {/* Clear Two-Action Suite */}
+                    <div className="flex flex-wrap items-center gap-3 pt-1">
                       <button
-                        onClick={() => setEnrollModalOpen(true)}
-                        className="px-6 py-3 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs sm:text-sm shadow-sm hover:shadow transition-all"
+                        onClick={() => { setEnrollSuccess(false); setEnrollModalOpen(true); }}
+                        className="px-6 py-3.5 rounded-xl bg-teal-700 hover:bg-teal-800 active:scale-98 text-white font-bold text-sm shadow-xs hover:shadow transition-all cursor-pointer"
                       >
                         {t.hero.ctaEnroll}
                       </button>
+
                       <a
                         href="#stages"
-                        className="px-5 py-3 rounded-xl border border-slate-300 hover:border-teal-600 bg-white text-slate-800 font-bold text-xs sm:text-sm hover:text-teal-700 transition-all"
+                        className="px-5 py-3.5 rounded-xl border border-slate-300 hover:border-teal-700 bg-white hover:bg-teal-50/50 text-slate-700 hover:text-teal-800 font-bold text-sm transition-all"
                       >
                         {t.hero.ctaExplore}
                       </a>
                     </div>
 
-                    {/* Verified Quick Badges */}
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 pt-4 border-t border-slate-200">
-                      <div className="bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
-                        <span className="block text-base sm:text-lg font-black text-teal-800">100%</span>
-                        <span className="text-[11px] font-semibold text-slate-600">{t.hero.statStudents}</span>
-                      </div>
-                      <div className="bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
-                        <span className="block text-base sm:text-lg font-black text-indigo-800">25m</span>
-                        <span className="text-[11px] font-semibold text-slate-600">{t.hero.statRating}</span>
-                      </div>
-                      <div className="col-span-2 sm:col-span-1 bg-white p-3 rounded-2xl border border-slate-200 shadow-2xs">
-                        <span className="block text-xs sm:text-sm font-black text-amber-700 font-mono tracking-wide" dir="ltr">0557.72.28.45</span>
-                        <span className="text-[11px] font-semibold text-slate-600">Ouled Fayet</span>
-                      </div>
+                    {/* Understated Location & Contact Info */}
+                    <div className="pt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-xs text-slate-500 font-medium">
+                      <span className="inline-flex items-center gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-teal-700 shrink-0" aria-hidden="true" />
+                        <span>{t.hero.locationLabel}</span>
+                      </span>
+                      <span className="text-slate-300 hidden sm:inline" aria-hidden="true">·</span>
+                      <span className="inline-flex items-center gap-1.5 text-slate-600 font-mono" dir="ltr">
+                        <Phone className="w-3.5 h-3.5 text-teal-700 shrink-0" aria-hidden="true" />
+                        <span>0557.72.28.45</span>
+                      </span>
                     </div>
+
+                    {/* Subtle Playful Accents (Matching Reference 2) */}
+                    <div className="hidden sm:block absolute -bottom-10 start-0 w-12 h-12 rounded-full border-2 border-teal-500/25 pointer-events-none" aria-hidden="true" />
+                    <div className="hidden sm:block absolute top-1/2 -start-8 w-2.5 h-2.5 rounded-full bg-amber-400/80 pointer-events-none" aria-hidden="true" />
                   </div>
 
-                  {/* Right Column (Hero Visual Composition — Authentic Campus Building) */}
-                  <div className="lg:col-span-5">
-                    <div 
-                      onClick={() => {
-                        const bIdx = REAL_GALLERY_ITEMS.findIndex(g => g.id === 'building-facade');
-                        if (bIdx !== -1) {
-                          setLightboxIndex(bIdx);
-                        }
-                      }}
-                      className="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white bg-slate-950 group aspect-[4/5] sm:aspect-[4/3] lg:aspect-[4/5] max-h-[520px] w-full mx-auto cursor-pointer transition-transform"
-                    >
-                      <img 
-                        src={schoolBuilding} 
-                        alt="Façade du Groupe Scolaire Encre & Pastel à Ouled Fayet" 
-                        className="w-full h-full object-cover object-top group-hover:scale-103 transition-transform duration-700"
-                        loading="eager"
-                      />
-                      <div className="absolute top-3.5 end-3.5 px-2.5 py-1 rounded-full bg-slate-950/70 backdrop-blur-xs text-white text-[10px] font-bold border border-white/20 flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
-                        <Maximize2 className="w-3.5 h-3.5 text-teal-300" />
-                        <span>{t.gallery.viewPhoto}</span>
+                  {/* Visual Column (Geometric Collage of Authentic Children Learning Photographs) */}
+                  <div className="lg:col-span-6 xl:col-span-6 relative">
+                    <div className="relative w-full max-w-[440px] sm:max-w-[480px] lg:max-w-[520px] mx-auto py-6 sm:py-8 flex items-center justify-center">
+                      
+                      {/* Playful Floating Geometry (Echoing "Hibr wa Alwan" / Encre & Pastel palette) */}
+                      <div className="absolute -top-3 start-8 w-3 h-3 rounded-full bg-rose-400/80 pointer-events-none" aria-hidden="true" />
+                      <div className="absolute -bottom-6 end-12 w-14 sm:w-16 h-14 sm:h-16 rounded-full border-2 border-teal-500/30 pointer-events-none" aria-hidden="true" />
+                      <div className="absolute top-1/2 -start-3 w-2.5 h-2.5 rounded-full bg-amber-400/80 pointer-events-none" aria-hidden="true" />
+                      <div className="absolute -top-2 end-28 w-2 h-2 rounded-full bg-teal-600/70 pointer-events-none" aria-hidden="true" />
+
+                      {/* Overlapping Secondary Photo: Hands-on Educational Activity (Ref 2 inspired) */}
+                      <div 
+                        onClick={() => {
+                          const idx = REAL_GALLERY_ITEMS.findIndex(g => g.id === 'kindergarten-play');
+                          if (idx !== -1) setLightboxIndex(idx);
+                        }}
+                        className="absolute top-2 sm:top-4 end-0 sm:end-2 lg:end-0 z-0 w-44 sm:w-52 lg:w-56 h-52 sm:h-60 lg:h-64 rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border-4 border-white bg-slate-100 cursor-pointer group"
+                        title={t.gallery.viewPhoto}
+                      >
+                        <img
+                          src={kindergartenHeroImg}
+                          alt="Activités pédagogiques et d'éveil des enfants"
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                          loading="eager"
+                        />
                       </div>
-                      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/90 via-slate-950/40 to-transparent p-5 text-white text-start z-10">
-                        <span className="inline-block px-2.5 py-0.5 rounded-md bg-teal-600 text-white text-[10px] font-bold uppercase tracking-wider mb-1.5 shadow-xs">
-                          {SCHOOL_CONFIG.name[lang]}
-                        </span>
-                        <h3 className="text-sm sm:text-base font-bold leading-tight break-words">
-                          Groupe Scolaire Encre & Pastel — Ouled Fayet
-                        </h3>
-                        <p className="text-[11px] text-slate-300 mt-1 flex items-center gap-1.5">
-                          <MapPin className="w-3.5 h-3.5 text-teal-400 shrink-0" />
-                          <span>طريق بوشاوي، بجانب بلدية أولاد فايت وإقامة النخيل</span>
-                        </p>
+
+                      {/* Dominant Central Diamond Photo: Classroom Learning (Ref 2 diamond framing) */}
+                      <div 
+                        onClick={() => {
+                          const idx = REAL_GALLERY_ITEMS.findIndex(g => g.id === 'classroom-learning');
+                          if (idx !== -1) setLightboxIndex(idx);
+                        }}
+                        className="relative z-10 w-52 h-52 sm:w-60 sm:h-60 lg:w-68 lg:h-68 rotate-45 overflow-hidden rounded-3xl sm:rounded-4xl shadow-xl border-4 border-white bg-teal-50/50 cursor-pointer group my-6 sm:my-8"
+                        title={t.gallery.viewPhoto}
+                      >
+                        <img
+                          src={classroomHeroImg}
+                          alt="Élèves en classe d'apprentissage au Groupe Scolaire Encre & Pastel"
+                          className="-rotate-45 scale-145 w-full h-full object-cover object-center group-hover:scale-150 transition-transform duration-500"
+                          loading="eager"
+                        />
                       </div>
+
+                      {/* Complementary Geometric Accent Badge (Ref 2 inspired warm gold geometry) */}
+                      <div className="absolute top-0 end-6 sm:end-12 z-20 bg-amber-400 text-slate-950 px-3.5 py-1.5 rounded-xl sm:rounded-2xl shadow-md border-2 border-white text-xs font-bold flex items-center gap-1.5 pointer-events-none select-none">
+                        <Sparkles className="w-3.5 h-3.5 text-amber-950 shrink-0" aria-hidden="true" />
+                        <span>{t.story.pill1}</span>
+                      </div>
+
+                      {/* Complementary Third Photo: Creative Art Studio (Encre & Pastel visual anchor) */}
+                      <div 
+                        onClick={() => {
+                          const idx = REAL_GALLERY_ITEMS.findIndex(g => g.id === 'art-studio');
+                          if (idx !== -1) setLightboxIndex(idx);
+                        }}
+                        className="absolute -bottom-2 sm:-bottom-4 start-2 sm:start-6 z-20 w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-2xl sm:rounded-3xl overflow-hidden shadow-md border-3 sm:border-4 border-white bg-slate-100 cursor-pointer group"
+                        title={t.gallery.viewPhoto}
+                      >
+                        <img
+                          src={artWorkshopHeroImg}
+                          alt="Atelier d'arts plastiques et créativité"
+                          className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      </div>
+
                     </div>
                   </div>
 
@@ -889,6 +1021,15 @@ export default function App() {
                 </div>
               </div>
             </section>
+
+            {/* Dedicated Campus Tour Showcase Banner */}
+            <CampusTourBanner
+              onOpenTourModal={() => setTourModalOpen(true)}
+              hasBooking={!!tourBookingData}
+              bookingData={tourBookingData}
+              lang={lang}
+              t={t}
+            />
 
             {/* Campus Life & Family Services Section */}
             <section id="vie-scolaire" className="py-12 sm:py-16 bg-slate-50 border-b border-slate-200">
@@ -1841,85 +1982,136 @@ export default function App() {
                 </div>
               </div>
               <button 
-                onClick={() => setEnrollModalOpen(false)}
+                onClick={() => { setEnrollModalOpen(false); setEnrollSuccess(false); }}
                 className="p-1 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-xl"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Direct Contact Banner */}
-            <div className="rounded-2xl overflow-hidden border border-teal-200 bg-gradient-to-r from-teal-50 to-emerald-50 p-4 space-y-2 text-start">
-              <span className="inline-block px-2.5 py-0.5 rounded-full bg-teal-700 text-white text-[10px] font-bold">
-                {lang === 'ar' ? 'التسجيلات مفتوحة للموسم الجديد' : 'Inscriptions Ouvertes'}
-              </span>
-              <p className="text-xs font-bold text-teal-950">
-                {lang === 'ar' ? 'الاتصال المباشر بالإدارة والاستقبال (أولاد فايت):' : 'Lignes directes de l\'accueil :'}
-              </p>
-              <div className="flex flex-wrap items-center gap-2 pt-1">
-                <a href="tel:0557722845" className="text-xs font-mono font-bold text-teal-800 bg-white px-2.5 py-1 rounded-md border border-teal-200 shadow-2xs" dir="ltr">
-                  0557.72.28.45
-                </a>
-                <a href="tel:0550096934" className="text-xs font-mono font-bold text-teal-800 bg-white px-2.5 py-1 rounded-md border border-teal-200 shadow-2xs" dir="ltr">
-                  0550.09.69.34
-                </a>
-              </div>
-            </div>
+            {enrollSuccess ? (
+              <div className="py-6 text-center space-y-4 animate-in fade-in">
+                <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
+                  <CheckCircle2 className="w-7 h-7" />
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-base font-bold text-slate-900">
+                    {lang === 'ar' ? 'تم تسجيل طلبكم بنجاح!' : 'Demande enregistrée avec succès !'}
+                  </h4>
+                  <p className="text-xs text-slate-600 leading-relaxed max-w-sm mx-auto">
+                    {lang === 'ar' 
+                      ? 'شكراً لكم! سيتواصل معكم فريق الاستقبال والتوجيه قريباً لتأكيد الملف ومرافقتكم في كل الخطوات.'
+                      : 'Merci ! Notre équipe prendra contact avec vous prochainement pour finaliser votre dossier.'}
+                  </p>
+                </div>
 
-            <form onSubmit={(e) => { e.preventDefault(); alert(lang === 'ar' ? 'شكراً لكم! تم تسجيل طلبكم بنجاح، وسيتواصل معكم فريق الإدارة والاستقبال لتحديد موعد الزيارة وتأكيد الملف.' : 'Merci ! Votre demande a été enregistrée avec succès. Notre équipe prendra contact avec vous prochainement.'); setEnrollModalOpen(false); }} className="space-y-3 text-start">
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  {lang === 'ar' ? 'اسم ولي الأمر الكامل' : 'Nom complet du parent'}
-                </label>
-                <input required type="text" className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-teal-600 bg-slate-50" />
+                <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setEnrollModalOpen(false);
+                      setEnrollSuccess(false);
+                      setTourModalOpen(true);
+                    }}
+                    className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-teal-600 bg-teal-50 text-teal-900 text-xs font-bold inline-flex items-center justify-center gap-1.5 hover:bg-teal-100 transition-colors cursor-pointer"
+                  >
+                    <Compass className="w-4 h-4 text-teal-700" />
+                    <span>{t.tourBooking.heroButton}</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => { setEnrollModalOpen(false); setEnrollSuccess(false); }}
+                    className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold transition-colors cursor-pointer"
+                  >
+                    {lang === 'ar' ? 'إغلاق النافذة' : 'Fermer'}
+                  </button>
+                </div>
               </div>
+            ) : (
+              <>
+                {/* Direct Contact Banner */}
+                <div className="rounded-2xl overflow-hidden border border-teal-200 bg-gradient-to-r from-teal-50 to-emerald-50 p-4 space-y-2 text-start">
+                  <span className="inline-block px-2.5 py-0.5 rounded-full bg-teal-700 text-white text-[10px] font-bold">
+                    {lang === 'ar' ? 'التسجيلات مفتوحة للموسم الجديد' : 'Inscriptions Ouvertes'}
+                  </span>
+                  <p className="text-xs font-bold text-teal-950">
+                    {lang === 'ar' ? 'الاتصال المباشر بالإدارة والاستقبال (أولاد فايت):' : 'Lignes directes de l\'accueil :'}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-2 pt-1">
+                    <a href="tel:0557722845" className="text-xs font-mono font-bold text-teal-800 bg-white px-2.5 py-1 rounded-md border border-teal-200 shadow-2xs" dir="ltr">
+                      0557.72.28.45
+                    </a>
+                    <a href="tel:0550096934" className="text-xs font-mono font-bold text-teal-800 bg-white px-2.5 py-1 rounded-md border border-teal-200 shadow-2xs" dir="ltr">
+                      0550.09.69.34
+                    </a>
+                  </div>
+                </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  {lang === 'ar' ? 'رقم الهاتف' : 'Numéro de téléphone'}
-                </label>
-                <input required type="tel" placeholder="05XX XX XX XX" className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-teal-600 bg-slate-50" />
-              </div>
+                <form onSubmit={(e) => { e.preventDefault(); setEnrollSuccess(true); }} className="space-y-3 text-start">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      {lang === 'ar' ? 'اسم ولي الأمر الكامل' : 'Nom complet du parent'}
+                    </label>
+                    <input required type="text" className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-teal-600 bg-slate-50" />
+                  </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  {lang === 'ar' ? 'الطور التعليمي المطلوب' : 'Cycle scolaire souhaité'}
-                </label>
-                <select className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-teal-600 bg-slate-50">
-                  <option value="preschool">{lang === 'ar' ? 'الطور التحضيري والروضة (Petite Section)' : 'Préscolaire & Maternelle'}</option>
-                  <option value="primary">{lang === 'ar' ? 'الطور الابتدائي (Primaire)' : 'Primaire'}</option>
-                  <option value="middle">{lang === 'ar' ? 'الطور المتوسط (Moyen - BEM)' : 'Moyen (BEM)'}</option>
-                  <option value="secondary">{lang === 'ar' ? 'الطور الثانوي (Secondaire - BAC)' : 'Secondaire (BAC)'}</option>
-                  <option value="summer">{lang === 'ar' ? 'المدرسة الصيفية (Summer School)' : 'École d\'Été (Summer School)'}</option>
-                </select>
-              </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      {lang === 'ar' ? 'رقم الهاتف' : 'Numéro de téléphone'}
+                    </label>
+                    <input required type="tel" placeholder="05XX XX XX XX" className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-teal-600 bg-slate-50" />
+                  </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-700 mb-1">
-                  {lang === 'ar' ? 'ملاحظات أو استفسارات إضافية' : 'Message ou remarques'}
-                </label>
-                <textarea rows={2} className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-teal-600 bg-slate-50"></textarea>
-              </div>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      {lang === 'ar' ? 'الطور التعليمي المطلوب' : 'Cycle scolaire souhaité'}
+                    </label>
+                    <select className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-teal-600 bg-slate-50">
+                      <option value="preschool">{lang === 'ar' ? 'الطور التحضيري والروضة (Petite Section)' : 'Préscolaire & Maternelle'}</option>
+                      <option value="primary">{lang === 'ar' ? 'الطور الابتدائي (Primaire)' : 'Primaire'}</option>
+                      <option value="middle">{lang === 'ar' ? 'الطور المتوسط (Moyen - BEM)' : 'Moyen (BEM)'}</option>
+                      <option value="secondary">{lang === 'ar' ? 'الطور الثانوي (Secondaire - BAC)' : 'Secondaire (BAC)'}</option>
+                      <option value="summer">{lang === 'ar' ? 'المدرسة الصيفية (Summer School)' : 'École d\'Été (Summer School)'}</option>
+                    </select>
+                  </div>
 
-              <div className="pt-2 flex items-center justify-end gap-2.5">
-                <button 
-                  type="button" 
-                  onClick={() => setEnrollModalOpen(false)}
-                  className="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-100"
-                >
-                  {lang === 'ar' ? 'إلغاء' : 'Annuler'}
-                </button>
-                <button 
-                  type="submit" 
-                  className="px-5 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs shadow-xs"
-                >
-                  {lang === 'ar' ? 'تأكيد طلب التسجيل الأولي' : 'Confirmer la pré-inscription'}
-                </button>
-              </div>
-            </form>
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1">
+                      {lang === 'ar' ? 'ملاحظات أو استفسارات إضافية' : 'Message ou remarques'}
+                    </label>
+                    <textarea rows={2} className="w-full px-3 py-2 rounded-xl border border-slate-200 text-xs focus:outline-teal-600 bg-slate-50"></textarea>
+                  </div>
+
+                  <div className="pt-2 flex items-center justify-end gap-2.5">
+                    <button 
+                      type="button" 
+                      onClick={() => setEnrollModalOpen(false)}
+                      className="px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-bold text-slate-600 hover:bg-slate-100"
+                    >
+                      {lang === 'ar' ? 'إلغاء' : 'Annuler'}
+                    </button>
+                    <button 
+                      type="submit" 
+                      className="px-5 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs shadow-xs cursor-pointer"
+                    >
+                      {lang === 'ar' ? 'تأكيد طلب التسجيل الأولي' : 'Confirmer la pré-inscription'}
+                    </button>
+                  </div>
+                </form>
+              </>
+            )}
           </div>
         </div>
       )}
+
+      {/* Interactive Campus Tour Booking Modal */}
+      <CampusTourModal
+        isOpen={tourModalOpen}
+        onClose={() => setTourModalOpen(false)}
+        lang={lang}
+        t={t}
+        onBookingConfirmed={(booking) => setTourBookingData(booking)}
+      />
 
       {/* Floating Direct Contact Actions (WhatsApp & Direct Call) */}
       <div 
